@@ -1,6 +1,6 @@
-# Analyzing NBA data from the last decade with SQL
+# Analyzing NBA Data From the Last Decade with SQL
 ## Introduction
-We have been given a dataset containing comprehensive game stats, player stats, and team stats for every game from the 2013-14 season up until the 2022-23 season. This dataset was downloaded from Kaggle.com. [NBA Boxscore Dataset](https://www.kaggle.com/datasets/lukedip/nba-boxscore-dataset) Our goal is to analyze the data, and answer some key questions, and then build a dashboard that can display the data to our stats team. The core focus of this analysis is related to the 3-pointer and it's relationship to winning games. 
+We have been given a dataset containing comprehensive game stats, player stats, and team stats for every game from the 2013-14 season up until the 2022-23 season. This dataset was downloaded from Kaggle.com. [NBA Boxscore Dataset](https://www.kaggle.com/datasets/lukedip/nba-boxscore-dataset) Our goal is to ensure the data is clean and then explore and gather insights about the data, using some complex SQL queries. The core focus of this analysis is related to the 3-pointer and it's relationship to winning games. 
 #### Questions
 What was the average number of 3s taken per game by a team in the 2013-2014 season?
 
