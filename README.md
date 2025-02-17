@@ -15,3 +15,12 @@ Does having a center that can shoot 3s boost win %?
 What results in more wins? Outrebounding opponents vs making more 3-pointers.
 
 
+#### Question 1 - Average number of 3s: 2013/14 vs 2022/23
+
+```
+SELECT ROUND(AVG([3PA]),2) AS rounded_3PA_avg
+FROM team_stats ts
+JOIN game_info gi
+ON ts.game_id = gi.game_id
+WHERE season = 2223;
+```
