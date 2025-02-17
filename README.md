@@ -31,3 +31,9 @@ Upon executing the code, the output looks like this:
 
 ![image_alt](https://github.com/brianhornick/NBA-Stats-Analysis-SQL/blob/main/Images/Screenshot%202025-02-17%20133036.png?raw=true)
 
+From this output, we can see a huge difference in the number of 3pa for the 2022-23 season vs the 2013-14 season, almost a 60% increase. 
+
+#### Question 2 - The winning percentage of high vs low 3-point volume teams
+
+
+
