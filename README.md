@@ -15,7 +15,7 @@ Does having a center that can shoot 3s boost win %?
 What results in more wins? Outrebounding opponents vs making more 3-pointers.
 
 
-### Question 1 - Average number of 3s: 2013/14 vs 2022/23
+### Question 1 - Average Number of 3s: 2013/14 vs 2022/23
 
 This first question allows us to get a first, general look at how much the game has changed over the last decade. The problem seems straightforward, however, it does require a few functions to calculate. The table where the 3PA (3-point attempts) are outlined is held in the team_stats table, where the season each game is played is held in the game_info table. Therefore we must join the tables on their matching "game_id" column to find 3-point attempts filtered by specific seasons. The AVG function is used, of course, to find the average number of 3s taken. ROUND and AS functions are used to make the output a little cleaner and the FILTER function is used to filter both the outputs by the respective seasons being compared.
 
@@ -33,11 +33,11 @@ Upon executing the code, the output looks like this:
 
 From this output, we can see a huge difference in the number of 3pa for the 2022-23 season vs the 2013-14 season, almost a 60% increase. 
 
-### Question 2 - The winning percentage of high vs low 3-point volume teams
+### Question 2 - The Winning Percentage of High vs Low 3-Point Volume Teams
 
 In this section, we aim to take the winning % of the top 5 teams with the highest volume of 3s attempted and compare it to the winning % of the teams with the least amount of 3's attempted.
 
-Part 1: Finding the top and bottom 5 teams in total 3PA
+Part 1: Finding the Top and Bottom 5 Teams in Total 3PA
 
 To find the top and bottom 5 teams in terms of total 3-point attempts for the last 3 years, we must first select each team and their respective total 3PA output over the past 3 years. SUM, GROUP BY, and ORDER BY functions will allow us to get the total 3s, grouped by each team ordered by the amount of 3s they attempted. To filter by the last 3 seasons, the same join function must be used as the previous question, however this time, we will use a where clause to filter the last 3 years.
 
