@@ -54,8 +54,27 @@ Here is the output for the above code:
 
 ![image_alt](https://github.com/brianhornick/NBA-Stats-Analysis-SQL/blob/main/Images/Screenshot%202025-02-18%20143407.png?raw=true) ![image_alt](https://github.com/brianhornick/NBA-Stats-Analysis-SQL/blob/main/Images/Screenshot%202025-02-18%20152021.png?raw=true)
 
+As shown, the top 5 teams we will be looking at are Golden State, Utah, Dallas, Boston and Milwaukee and the bottom 5 teams are Chicago, Washington, New Orleans, San Antonio and Cleveland
 
+Part 2: Calculating and Comparing Win %
 
+```
+SELECT 
+ROUND((COUNT(home_team) FILTER (WHERE result = 1 AND (home_team = 'GSW' OR home_team = 'DAL' OR home_team = 'UTA' OR home_team = 'BOS' OR home_team = 'MIL')) +
+COUNT(away_team) FILTER (WHERE result = 0 AND (away_team = 'GSW' OR away_team = 'DAL' OR away_team = 'UTA' OR away_team = 'BOS' OR away_team = 'MIL'))) * 100.0
+/ (COUNT(game_id) FILTER (WHERE home_team = 'GSW' OR home_team = 'DAL' OR home_team = 'UTA' OR home_team = 'BOS' OR home_team = 'MIL') 
++ COUNT(game_id) FILTER (WHERE away_team = 'GSW' OR away_team = 'DAL' OR away_team = 'UTA' OR away_team = 'BOS' OR away_team = 'MIL')),2) AS top_5winperc,
+
+ROUND((COUNT(home_team) FILTER (WHERE result = 1 AND (home_team = 'CHI' OR home_team = 'WAS' OR home_team = 'NOP' OR home_team = 'SAS' OR home_team = 'CLE')) +
+COUNT(away_team) FILTER (WHERE result = 0 AND (away_team = 'CHI' OR away_team = 'WAS' OR away_team = 'NOP' OR away_team = 'SAS' OR away_team = 'CLE'))) * 100.0
+/ (COUNT(game_id) FILTER (WHERE home_team = 'CHI' OR home_team = 'WAS' OR home_team = 'NOP' OR home_team = 'SAS' OR home_team = 'CLE') 
++ COUNT(game_id) FILTER (WHERE away_team = 'CHI' OR away_team = 'WAS' OR away_team = 'NOP' OR away_team = 'SAS' OR away_team = 'CLE')),2) AS bottom_5winperc
+
+FROM game_info
+WHERE season = 2223 OR season = 2122 OR season = 2021;
+```
+
+![image_alt](https://github.com/brianhornick/NBA-Stats-Analysis-SQL/blob/main/Images/Screenshot%202025-02-18%20163344.png?raw=true)
 
 
 
