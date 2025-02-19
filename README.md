@@ -37,7 +37,7 @@ From this output, we can see a huge difference in the number of 3pa for the 2022
 
 We've seen a glaring difference in the amount of 3s taken per game, comparing the 2013-14 vs the 2022-23 seasons, however, we don't know if this was a gradual change or if there were there certain seasons where there were massive spikes. By looking at the year-over-year change difference in average 3s taken per game, we can get the answer to this question.
 
-To find this, first, we create a CTE (Common Table Expression) which establishes a temporary table that takes the season and average 3PA per game, per team. A similar method is used as the first problem, obtaining our averages using the AVG function, rounding our answers to 2 decimal places with the ROUND function, using JOIN to get the season variable, and in this case, using GROUP BY to get the average 3PA per each season. Then, from this temporary table, we query the season again and then take the average 3PA per season subtracted by the previous year (using the LAG function) to get our 
+To find this, first, we create a CTE (Common Table Expression) which establishes a temporary table that takes the season and average 3PA per game, per team. A similar method is used as the first problem, obtaining our averages using the AVG function, rounding our answers to 2 decimal places with the ROUND function, using JOIN to get the season variable, and in this case, using GROUP BY to get the average 3PA per each season. Then, from this temporary table, we query the season again and then take the average 3PA per season subtracted by the previous year (using the LAG function) to get our year-over-year change in 3PA per game.
 ```
 WITH avg_3pa_calc AS (
 SELECT season, ROUND(AVG([3PA]),2) AS avg_3pa
@@ -53,7 +53,7 @@ Here is what this code executes:
 
 ![image_alt](https://github.com/brianhornick/NBA-Stats-Analysis-SQL/blob/main/Images/Screenshot%202025-02-19%20155000.png?raw=true)
 
-As we can see the largest increase in 3PA happened between the 2016-2017 - 2019-2020 season where there was a cumulative increase of over 10 3s a game! 
+As we can see the largest increase in 3PA happened between the 2016-2017 - 2019-2020 season where there was a combined total cumulative increase of over 10 3s a game! 
 The most recent season was actually the first season in the last 10 years to see a decrease in 3s per game.
 
 ### Question 3 - The Winning Percentage of High vs Low 3-Point Volume Teams
