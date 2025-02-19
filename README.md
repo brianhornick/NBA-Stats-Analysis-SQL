@@ -1,10 +1,12 @@
 # Analyzing NBA Data from the Last Decade with SQL - The 3 Pointer and its Effect on the Game
 ### Introduction
-We have been given a dataset containing comprehensive game stats, player stats, and team stats for every game from the 2013-14 season up until the 2022-23 season. This dataset was downloaded from Kaggle.com. [NBA Boxscore Dataset](https://www.kaggle.com/datasets/lukedip/nba-boxscore-dataset) The NBA has seen a huge increase in 3-point shots both made and attempted in the last decade. We aim to use this data to answer some unique questions regarding 3-pointers that will give more insight into how much the 3-pointer really affects winning games. We will be using SQLite to discover the answers to these questions. The goal is to answer these questions in as few steps as possible.
+We have been given a dataset containing comprehensive game stats, player stats, and team stats for every game from the 2013-14 season up until the 2022-23 season. This dataset was downloaded from Kaggle.com. [NBA Boxscore Dataset](https://www.kaggle.com/datasets/lukedip/nba-boxscore-dataset) The NBA has seen a huge increase in 3-point shots both made and attempted in the last decade. We aim to use this data to answer some unique questions regarding 3-pointers that will give more insight into how much the 3-pointer really affects winning games. We will be using SQLite to discover the answers to these questions.
 
 ### Questions
 
 What was the average number of 3s taken per game by a team in the 2013-2014 vs the 2022-2023 season?
+
+What is the year-over-year change in average 3s taken per game by a team?
 
 Which teams has taken the most 3s across the most recent 3 years in this dataset? What is their overall winning percentage compared to the teams with the least amount of 3s taken?
 
@@ -12,7 +14,7 @@ Do more 3PA (3-point attempts) lead to higher TS% (True shooting percentage)?
 
 Does having a center that can shoot 3s boost win %?
 
-What results in more wins? Outrebounding opponents vs making more 3-pointers.
+What results in more wins?  Outrebounding opponents vs making more 3-pointers.
 
 
 ### Question 1 - Average Number of 3s: 2013/14 vs 2022/23
@@ -33,7 +35,11 @@ Upon executing the code, the output looks like this:
 
 From this output, we can see a huge difference in the number of 3pa for the 2022-23 season vs the 2013-14 season, almost a 60% increase. 
 
-### Question 2 - The Winning Percentage of High vs Low 3-Point Volume Teams
+### Question 2 - Year-over-year change in average 3s taken per game
+
+We've seen a glaring difference in the amount of 3s taken per game, comparing the 2013-14 vs the 2022-23 seasons, however, we don't know if this was a gradual change or if there were there certain seasons where there were massive spikes. By looking at the year-over-year change in average 3s taken per game, we can get the answer to this question.
+
+### Question 3 - The Winning Percentage of High vs Low 3-Point Volume Teams
 
 In this section, we aim to take the winning % of the top 5 teams with the highest volume of 3s attempted and compare it to the winning % of the teams with the least amount of 3's attempted.
 
