@@ -53,8 +53,8 @@ Here is what this code executes:
 
 ![image_alt](https://github.com/brianhornick/NBA-Stats-Analysis-SQL/blob/main/Images/Screenshot%202025-02-19%20155000.png?raw=true)
 
-As we can see the largest increase in 3PA happened between the 2016-2017 - 2019-2020 season where there was a combined total cumulative increase of over 10 3s a game! 
-2022-23 was actually the first season in the last 10 years to see a decrease in 3s per game.
+As we can see the largest increase in 3PA happened between the 2016-2017 - 2019-2020 season where there was a combined total cumulative increase of over 10 3s taken a game! 
+2022-23 was actually the first season in the last 10 years to see a decrease in 3s taken per game.
 
 ### Question 3 - The Winning Percentage of High vs Low 3-Point Volume Teams
 
