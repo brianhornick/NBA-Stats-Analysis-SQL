@@ -10,7 +10,7 @@ What is the year-over-year change in average 3s taken per game by a team?
 
 Which teams has taken the most 3s across the most recent 3 years in this dataset? What is their overall winning percentage compared to the teams with the least amount of 3s taken?
 
-Do more 3PA impact winning when adjusted for 3-Point Percentage?
+Do more 3-Point Attempts impact winning when adjusted for 3-Point Percentage?
 
 What results in more wins?  Outrebounding opponents vs making more 3-pointers.
 
