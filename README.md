@@ -144,7 +144,9 @@ Here is what the above query executes:
 
 ![image_alt](https://github.com/brianhornick/NBA-Stats-Analysis-SQL/blob/main/Images/Screenshot%202025-02-20%20151446.png?raw=true)
 
-Our results show a pretty inconclusive answer as the total wins across the 3 seasons seem to be uncorrelated with 3PA, when adjusted for 3P%. There are likely many other factors at play, such as defense, rebounding, turnovers, ect. and our sample size is pretty small.
+8 teams fall in this +/- 1% of league average 3P%
 
-Let's take a look at rebounding and compare it's impact on winning vs 3P%.
+Our results show a pretty inconclusive answer as the total wins, across the 3 seasons seem to be uncorrelated with 3PA, when adjusted for 3P%. There are likely many other factors at play, such as defense, rebounding, turnovers, ect. and our sample size is pretty small.
+
+Let's take a look at rebounding and compare its impact on winning vs 3P%.
 
