@@ -138,7 +138,7 @@ GROUP BY team
 HAVING 
 (SELECT league_3Pp
 FROM league3P_avg) - ROUND(AVG([3Pp]),2) BETWEEN -0.01 AND 0.01
-ORDER BY [average_3pa]
+ORDER BY [average_3pa];
 ```
 Here is what the above query executes: 
 
