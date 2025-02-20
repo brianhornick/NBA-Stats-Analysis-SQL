@@ -10,7 +10,7 @@ What is the year-over-year change in average 3s taken per game by a team?
 
 Which teams has taken the most 3s across the most recent 3 years in this dataset? What is their overall winning percentage compared to the teams with the least amount of 3s taken?
 
-Do more 3PA (3-point attempts) lead to higher TS% (True shooting percentage)? 
+Do more 3PA impact winning when adjusted for 3-Point Percentage?
 
 What results in more wins?  Outrebounding opponents vs making more 3-pointers.
 
@@ -107,5 +107,11 @@ Here is our result:
 The difference here is very apparent as the top 5 teams have almost a 60% winning percentage compared to only a 45% winning percentage of the bottom 5 teams. 
 Clearly, there is some correlation between taking more 3s and winning games, however, the relationship between the 3-pointer and winning games still requires further investigation. 
 As many know, correlation does not always mean causation.
+
+### Question 4 - Adjusting for 3-Point Percentage
+
+One confounding variable that is almost definitely leading teams to shoot more 3-pointers is that they are simply better at shooting them and thus will shoot more. In this section, we will be comparing the 3PA and wins of teams that shoot around the league average in 3P% (3-Point Percentage). Again, we will be looking at the most recent 3 seasons in this dataset.
+
+
 
 
