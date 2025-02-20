@@ -47,7 +47,7 @@ FROM team_stats ts
 GROUP BY season)
 
 SELECT season, avg_3pa - LAG(avg_3pa, 1) OVER (ORDER BY season) AS YOY_3pa_change
-FROM avg_3pa_calc
+FROM avg_3pa_calc;
 ```
 Here is what this code executes:
 
