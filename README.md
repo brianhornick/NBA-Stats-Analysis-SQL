@@ -112,6 +112,39 @@ As many know, correlation does not always mean causation.
 
 One confounding variable that is almost definitely leading teams to shoot more 3-pointers is that they are simply better at shooting them and thus will shoot more. In this section, we will be comparing the 3PA and wins of teams that shoot around the league average in 3P% (3-Point Percentage). Again, we will be looking at the most recent 3 seasons in this dataset.
 
+The first part of this code is obtaining the league average for 3P% over the last 3 years. We will use this figure in the next part of our query to find teams that shoot around this average. We have nested this figure in a CTE so that we can easily refer to it in the next part of our query.
 
+Following this, the column team, as well as aggregate calculations of rounded average 3 point attempts per game and rounded average 3P% per game are performed so that we can compare the 3PA and ensure that all these teams being compared have nearly the same 3P%. Lastly, a SUM and CASE function is used to add up all the home and away wins for each team. 
 
+Next, we join our two tables once again, so that we can use filter by season and then GROUP BY team. Now, to only select teams around the league average, we must use the HAVING clause, followed by a nested query that obtains our league average 3P% calculation. We take this calculation and subtract it from each team's 3P%. Using the BETWEEN function, only teams that shoot within 1% above or below the league average will be included. 
+
+```
+WITH league3P_avg as (
+SELECT ROUND(avg([3Pp]),2) AS league_3Pp
+FROM team_stats ts
+    JOIN game_info gi
+    ON ts.game_id = gi.game_id
+WHERE season = 2223 OR season = 2122 OR season = 2021)
+
+SELECT team, ROUND(AVG([3PA]),2) AS average_3pa, ROUND(AVG([3Pp]),4) * 100 AS average_3Pperc,
+SUM(CASE WHEN team = [home_team] AND [result] = 1 THEN 1
+WHEN team = [away_team] AND result = 0 THEN 1
+ELSE 0 END) AS total_wins
+FROM team_stats ts
+    JOIN game_info gi
+    ON ts.game_id = gi.game_id
+WHERE season = 2223 OR season = 2122 OR season = 2021
+GROUP BY team
+HAVING 
+(SELECT league_3Pp
+FROM league3P_avg) - ROUND(AVG([3Pp]),2) BETWEEN -0.01 AND 0.01
+ORDER BY [average_3pa]
+```
+Here is what the above query executes: 
+
+![image_alt](https://github.com/brianhornick/NBA-Stats-Analysis-SQL/blob/main/Images/Screenshot%202025-02-20%20151446.png?raw=true)
+
+Our results show a pretty inconclusive answer as the total wins across the 3 seasons seem to be uncorrelated with 3PA, when adjusted for 3P%. There are likely many other factors at play, such as defense, rebounding, turnovers, ect. and our sample size is pretty small.
+
+Let's take a look at rebounding and compare it's impact on winning vs 3P%.
 
