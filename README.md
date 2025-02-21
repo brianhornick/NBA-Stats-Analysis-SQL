@@ -1,6 +1,6 @@
 # Analyzing NBA Data from the Last Decade with SQL - The 3 Pointer and its Effect on the Game
 ### Introduction
-We have been given a dataset containing comprehensive game stats, player stats, and team stats for every game from the 2013-14 season up until the 2022-23 season. This dataset was downloaded from Kaggle.com. [NBA Boxscore Dataset](https://www.kaggle.com/datasets/lukedip/nba-boxscore-dataset) The NBA has seen a huge increase in 3-point shots both made and attempted in the last decade. We aim to use this data to answer some unique questions regarding 3-pointers that will give more insight into how much the 3-pointer really affects winning games. We will be using SQLite to discover the answers to these questions.
+We have been given a dataset containing comprehensive game stats, player stats, and team stats for every game from the 2013-14 season up until the 2022-23 season. This dataset was downloaded from Kaggle.com. [NBA Boxscore Dataset](https://www.kaggle.com/datasets/lukedip/nba-boxscore-dataset) The NBA has seen a huge increase in 3-point shots both made and attempted in the last decade. We aim to use this data to answer some unique questions regarding 3-pointers that will give more insight into how much the 3-pointer really affects winning games. We will be using SQLite to discover the answers to these questions and the goal is to answer each question using only 1 query.
 
 ### Questions
 
@@ -58,59 +58,38 @@ As we can see the largest increase in 3PA happened between the 2016-2017 - 2019-
 
 ### Question 3 - The Winning Percentage of High vs Low 3-Point Volume Teams
 
-In this section, we aim to take the winning % of the top 5 teams with the highest volume of 3s attempted and compare it to the winning % of the teams with the least amount of 3's attempted.
-
-Part 1: Finding the Top and Bottom 5 Teams in Total 3PA
-
-To find the top and bottom 5 teams in terms of total 3-point attempts for the last 3 years, we must first select each team and their respective total 3PA output over the past 3 years. SUM, GROUP BY, and ORDER BY functions will allow us to get the total 3s, grouped by each team ordered by the amount of 3s they attempted. To filter by the last 3 seasons, the same join function must be used as the previous question, however this time, we will use a where clause to filter the last 3 years.
+In this section, we aim to take the winning % of the top 5 teams with the highest volume of 3s attempted and compare it to the winning % of the teams with the least amount of 3's attempted. This analysis will specifically look at the most recent 3 seasons. 
 
 ```
-SELECT team, SUM([3PA]) AS total_3PA
+WITH three_ranker AS (
+SELECT team, ROW_NUMBER () OVER (ORDER BY SUM([3PA]) DESC) AS rank,
+    SUM(CASE WHEN team = [home_team] AND [result] = 1 THEN 1
+        WHEN team = [away_team] AND result = 0 THEN 1
+        ELSE 0 END) AS total_wins,
+    SUM(CASE WHEN team = [home_team] OR team = [away_team] THEN 1 ELSE 0 END) AS total_games_played
 FROM team_stats ts
   JOIN game_info gi
   ON ts.game_id = gi.game_id
 WHERE season = 2223 OR season = 2122 OR season = 2021
-GROUP BY team
-ORDER BY total_3PA DESC;
+GROUP BY team)
+
+SELECT ROUND(SUM(total_wins) FILTER (WHERE [rank] < 6) * 100.0 / (total_games_played *5),2) AS top5_winperc,
+       ROUND(SUM(total_wins) FILTER (WHERE [rank] > 25) * 100.0 / (total_games_played *5),2) AS bottom5_winperc
+FROM three_ranker;
 ```
-Here is the output for the above code:
+First, we select our teams and then use a ROW_NUMBER window function to create a ranking that ranks all the teams by total 3 pointers attempted. Finally, 2 more columns are needed, one that totals wins using the SUM and CASE functions and another that uses the same functions to sum the total games played for each team over the 3 seasons. We need to add up games won and played this way as these tables don't have a specific column that totals wins but the game_info table does have a 'result' column that will display a '1' if the home team wins. Next, we use the JOIN to join in the game_info table and the WHERE function to filter by the most recent 3 seasons. Finally, we GROUP BY team. 
 
-![image_alt](https://github.com/brianhornick/NBA-Stats-Analysis-SQL/blob/main/Images/Screenshot%202025-02-18%20143407.png?raw=true) ![image_alt](https://github.com/brianhornick/NBA-Stats-Analysis-SQL/blob/main/Images/Screenshot%202025-02-18%20152021.png?raw=true)
+The output structure of this first part is shown below:
 
-As shown, the top 5 teams we will be looking at are Golden State, Utah, Dallas, Boston and Milwaukee and the bottom 5 teams are Chicago, Washington, New Orleans, San Antonio and Cleveland
+![image_alt](https://github.com/brianhornick/NBA-Stats-Analysis-SQL/blob/main/Images/Screenshot%202025-02-21%20142835.png?raw=true)
 
-Part 2: Calculating and Comparing Win %
+Now we need to put this query into a CTE so that we can calculate our win percentages off of it. Then, SUM and FILTER functions are used to add up the wins of both groups of 5 teams. We divide each by the total games * 5 as there are 5 teams and use the ROUND function as well as multiplying each numerator by 100.0 to obtain 2 clean percentages rounded to 2 decimal places as shown below:
 
-Now to calculate the win% of the top 5 and bottom 5 teams, we must add up all the wins for each of these groups and divide by the total number of games played. Unfortunately, this isn't as straightforward to calculate as expected, as wins and losses in this database are categorized by home team vs away team. When the home team wins the 'result' column will display a 1, when the away team wins the 'result' column displays a 0. The COUNT function is used to tally up all the wins, followed by the FILTER function which filters the result by the 'result' we are looking for (1 when adding home wins, 0 when adding away wins) and the teams we are interested in. 
-
-Total home and away wins are added together and then divided by the total number of games played by all 5 teams, which again we need to segment away teams and home teams. This is because if away and home teams are added together in the same FILTER block, occurrences where 2 of the teams of interest played each other will only count as one game played, when in fact it should be 2 (1 game played for each of the 2 teams). The ROUND function as well as multiplying the numerator by 100.0 ensures each result is a percentage number nicely rounded to 2 decimal places. The WHERE clause is used to ensure only results from the most recent 3 seasons of this database are used.
-
-```
-SELECT 
-ROUND((COUNT(home_team) FILTER (WHERE result = 1 AND (home_team = 'GSW' OR home_team = 'DAL' OR home_team = 'UTA' OR home_team = 'BOS' OR home_team = 'MIL')) +
-COUNT(away_team) FILTER (WHERE result = 0 AND (away_team = 'GSW' OR away_team = 'DAL' OR away_team = 'UTA' OR away_team = 'BOS' OR away_team = 'MIL'))) * 100.0
-/ (COUNT(game_id) FILTER (WHERE home_team = 'GSW' OR home_team = 'DAL' OR home_team = 'UTA' OR home_team = 'BOS' OR home_team = 'MIL') 
-+ COUNT(game_id) FILTER (WHERE away_team = 'GSW' OR away_team = 'DAL' OR away_team = 'UTA' OR away_team = 'BOS' OR away_team = 'MIL')),2) AS top_5winperc,
-
-ROUND((COUNT(home_team) FILTER (WHERE result = 1 AND (home_team = 'CHI' OR home_team = 'WAS' OR home_team = 'NOP' OR home_team = 'SAS' OR home_team = 'CLE')) +
-COUNT(away_team) FILTER (WHERE result = 0 AND (away_team = 'CHI' OR away_team = 'WAS' OR away_team = 'NOP' OR away_team = 'SAS' OR away_team = 'CLE'))) * 100.0
-/ (COUNT(game_id) FILTER (WHERE home_team = 'CHI' OR home_team = 'WAS' OR home_team = 'NOP' OR home_team = 'SAS' OR home_team = 'CLE') 
-+ COUNT(game_id) FILTER (WHERE away_team = 'CHI' OR away_team = 'WAS' OR away_team = 'NOP' OR away_team = 'SAS' OR away_team = 'CLE')),2) AS bottom_5winperc
-
-FROM game_info
-WHERE season = 2223 OR season = 2122 OR season = 2021;
-```
-Here is our result:
-
-![image_alt](https://github.com/brianhornick/NBA-Stats-Analysis-SQL/blob/main/Images/Screenshot%202025-02-18%20163344.png?raw=true)
-
-The difference here is very apparent as the top 5 teams have almost a 60% winning percentage compared to only a 45% winning percentage of the bottom 5 teams. 
-Clearly, there is some correlation between taking more 3s and winning games, however, the relationship between the 3-pointer and winning games still requires further investigation. 
-As many know, correlation does not always mean causation.
+![image_alt](https://github.com/brianhornick/NBA-Stats-Analysis-SQL/blob/main/Images/Screenshot%202025-02-21%20141710.png?raw=true)
 
 ### Question 4 - Adjusting for 3-Point Percentage
 
-One confounding variable that is almost definitely leading teams to shoot more 3-pointers is that they are simply better at shooting them and thus will shoot more. In this section, we will be comparing the 3PA and wins of teams that shoot around the league average in 3P% (3-Point Make Percentage). Again, we will be looking at the most recent 3 seasons in this dataset.
+One confounding variable that is almost definitely leading teams to shoot more 3-pointers is that they are simply better at shooting them and thus will shoot more. In this section, we will be comparing the 3PA and wins of teams that shoot around the league average in 3P% (3-Point Make Percentage). Again, we will look at this dataset's most recent 3 seasons.
 
 The first part of this code is obtaining the league average for 3P% over the last 3 years. We will use this figure in the next part of our query to find teams that shoot around this average. We have nested this figure in a CTE so that we can easily refer to it in the next part of our query.
 
