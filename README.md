@@ -1,4 +1,4 @@
-# Analyzing NBA Data from the Last Decade with SQL - The 3 Pointer and its Effect on the Game -  By Brian Hornick
+# Analyzing NBA Data from the Last Decade with SQL - The 3 Pointer and its Effect on the Game -  by Brian Hornick
 ### Introduction
 We have been given a dataset containing comprehensive game stats, player stats, and team stats for every game from the 2013-14 season up until the 2022-23 season. This dataset was downloaded from Kaggle.com. [NBA Boxscore Dataset](https://www.kaggle.com/datasets/lukedip/nba-boxscore-dataset) The NBA has seen a huge increase in 3-point shots both made and attempted in the last decade. We aim to use this data to answer some unique questions regarding 3-pointers that will give more insight into how much the 3-pointer really affects winning games. We will be using SQLite to discover the answers to these questions and the goal is to answer each question using only 1 query.
 
