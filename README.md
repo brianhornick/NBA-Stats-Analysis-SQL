@@ -87,15 +87,19 @@ Now we need to put this query into a CTE so that we can calculate our win percen
 
 ![image_alt](https://github.com/brianhornick/NBA-Stats-Analysis-SQL/blob/main/Images/Screenshot%202025-02-21%20141710.png?raw=true)
 
+As clearly shown, there is a stark difference in win % between the teams that shoot the most 3s and those that shoot the least. 
+
+A correlation definitely exists, however, correlation does not equal causation and it's important for us to look at possible confounding variables.
+
 ### Question 4 - Adjusting for 3-Point Percentage
 
 One confounding variable that is almost definitely leading teams to shoot more 3-pointers is that they are simply better at shooting them and thus will shoot more. In this section, we will be comparing the 3PA and wins of teams that shoot around the league average in 3P% (3-Point Make Percentage). Again, we will look at this dataset's most recent 3 seasons.
 
 The first part of this code is obtaining the league average for 3P% over the last 3 years. We will use this figure in the next part of our query to find teams that shoot around this average. We have nested this figure in a CTE so that we can easily refer to it in the next part of our query.
 
-Following this, the column team, as well as aggregate calculations of rounded average 3 point attempts per game and rounded average 3P% per game are performed so that we can compare the 3PA and ensure that all these teams being compared have nearly the same 3P%. Lastly, a SUM and CASE function is used to add up all the home and away wins for each team. 
+Following this, the column 'team', as well as aggregate calculations of rounded average 3 point attempts per game and rounded average 3P% per game are performed so that we can compare the 3PA and ensure that all these teams being compared have nearly the same 3P%. Lastly, a SUM and CASE function is used again to add up all the home and away wins for each team. 
 
-Next, we join our two tables once again, so that we can use filter by season and then GROUP BY team. Now, to only select teams around the league average, we must use the HAVING clause, followed by a nested query that obtains our league average 3P% calculation. We take this calculation and subtract it from each team's 3P%. Using the BETWEEN function, only teams that shoot within 1% above or below the league average will be included. 
+Next, we join our two tables once again, so that we can use filter (WHERE clause) by season and then GROUP BY team. Now, to only select teams around the league average, we must use the HAVING clause (as aggregate functions are being performed here), followed by a nested query that obtains our league average 3P% calculation. We take this calculation and subtract it from each team's 3P%. Using the BETWEEN function, only teams that shoot within 1% above or below the league average will be included. 
 
 ```
 WITH league3P_avg as (
