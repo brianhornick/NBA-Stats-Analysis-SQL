@@ -1,4 +1,4 @@
-# Analyzing NBA Data from the Last Decade with SQL - The 3 Pointer and its Effect on the Game -  by Brian Hornick
+# Analyzing NBA Data from the Last Decade with SQL - The 3 Pointer and its Effect on the Game - by Brian Hornick
 ### Introduction
 We have been given a dataset containing comprehensive game stats, player stats, and team stats for every game from the 2013-14 season up until the 2022-23 season. This dataset was downloaded from Kaggle.com. [NBA Boxscore Dataset](https://www.kaggle.com/datasets/lukedip/nba-boxscore-dataset) The NBA has seen a huge increase in 3-point shots both made and attempted in the last decade. We aim to use this data to answer some unique questions regarding 3-pointers that will give more insight into how much the 3-pointer really affects winning games. We will be using SQLite to discover the answers to these questions and the goal is to answer each question using only 1 query.
 
@@ -12,7 +12,7 @@ Which teams has taken the most 3s across the most recent 3 years in this dataset
 
 Do more 3-Point Attempts impact winning when adjusted for 3-Point Percentage?
 
-What results in more wins?  Outrebounding opponents vs making more 3-pointers.
+What results in more wins?  Outrebounding opponents vs shooting a higher 3-Point %
 
 
 ### Question 1 - Average Number of 3s: 2013/14 vs 2022/23
@@ -133,3 +133,35 @@ Our results show a pretty inconclusive answer as the total wins, across the 3 se
 
 Let's take a look at rebounding and compare its impact on winning vs 3P%.
 
+### Question 5 - Comparing the Winning Percentage of Outrebounding Opponents Vs Shooting A Higher 3-Point Percentage
+
+```
+SELECT 
+
+ROUND((SELECT COUNT(*)
+FROM team_stats g1
+JOIN team_stats g2 
+    ON g1.game_id = g2.game_id 
+    AND g1.team <> g2.team
+WHERE g1.TRB > g2.TRB AND g1.PTS > g2.PTS)
+* 100.0 / COUNT(DISTINCT game_id),2) AS Pct_Games_Won_Outrebounded,
+
+ROUND((SELECT COUNT(*) 
+FROM team_stats g1
+JOIN team_stats g2 
+    ON g1.game_id = g2.game_id 
+    AND g1.team <> g2.team
+WHERE g1.[3Pp] > g2.[3Pp] AND g1.PTS > g2.PTS)
+* 100.0 / COUNT(DISTINCT game_id),2) AS Pct_Games_Won_More3Ppct
+
+FROM team_stats
+```
+To solve this problem, rather than join other tables, we must perform a self-join. This is because each game_id has 2 rows, one for each team. By performing a self-join on the condition that the teams are not the same (AND g1.team <> g2.team), we can compare the two rows for each game_id much more easily. For each game, each team is now being directly compared to their opponent. 
+
+Next, a WHERE clause is used to select only the instances where a team had more points scored (PTS) and either total rebounds (TRB) (First sub-query) or a higher 3-Point Percentage (Second Sub-query). We then need to divide each output from our subquery by the total games played (COUNT(DISTINCT game_id)) and again, use the ROUND function as well as multiply the numerator by 100.0 to get a clean 2 decimal, percentage. 
+
+From this code, here is what we get:
+
+![image_alt](https://github.com/brianhornick/NBA-Stats-Analysis-SQL/blob/main/Images/Screenshot%202025-02-23%20140055.png?raw=true)
+
+As we can see, shooting a higher 3-point percentage does seem to lead to more wins than outrebounding opponents. However, the difference isn't huge and both do show a significant correlation with winning games.
