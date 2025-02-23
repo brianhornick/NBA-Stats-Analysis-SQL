@@ -168,8 +168,8 @@ As we can see, shooting a higher 3-point percentage does seem to lead to more wi
 
 ### Conclusion
 
-From looking at 3-point attempts and percentages through these 5 different problems, here are the conclusions we can draw
+From looking at 3-point attempts and percentages through these 5 different problems, here are the conclusions we can draw:
 
-1. There has certainly been a significant change in 3-pointers attempted per game over the past decade, most of which occurred between 2016 and 2020.
+1. There has certainly been a significant change in 3-pointers attempted per game over the past decade, most of this increase occurring between 2016 and 2020.
 2. Teams that attempt more 3s do on average win more games, however, this is more because teams will attempt more 3s when they have players capable of shooting higher percentages, not that taking more 3s directly causes more wins
 3. Shooting higher 3-point percentages does lead to more wins than outrebounding opponents but rebounds are still important
