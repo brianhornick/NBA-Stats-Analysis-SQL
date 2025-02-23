@@ -164,7 +164,7 @@ From this code, here is what we get:
 
 ![image_alt](https://github.com/brianhornick/NBA-Stats-Analysis-SQL/blob/main/Images/Screenshot%202025-02-23%20140055.png?raw=true)
 
-As we can see, shooting a higher 3-point percentage does seem to lead to more wins than outrebounding opponents. However, the difference isn't huge and both do show a significant correlation with winning games.
+As we can see, shooting a higher 3-point percentage (69.88%) does seem to lead to more wins than outrebounding opponents(64.11%). However, the difference isn't huge and both do show a significant correlation with winning games.
 
 ### Conclusion
 
