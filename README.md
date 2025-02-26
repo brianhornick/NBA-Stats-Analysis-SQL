@@ -1,6 +1,6 @@
 # Analyzing NBA Data with SQL - The Three-Pointer and its Effect on the Game - by Brian Hornick
 ### Introduction
-Anyone who knows anything about basketball will know that the NBA has seen a huge increase in 3-point shots both made and attempted in the last decade. However, just how much has the game changed, and how important is the three-ball really for winning games? To investigate this, we will be using a large dataset containing comprehensive game stats, player stats, and team stats for every game from the 2013-14 season up until the 2022-23 season. This dataset was downloaded from Kaggle.com. [NBA Boxscore Dataset](https://www.kaggle.com/datasets/lukedip/nba-boxscore-dataset) SQLite will be the tool to investigate this dataset and the goal is to answer each question using only 1 query.
+Anyone who knows anything about basketball will know that the NBA has seen a huge increase in 3-point shots both made and attempted in the last decade. However, just how much has the game changed, and how important is the three-ball really for winning games? To investigate this, we will be using a large dataset containing comprehensive game stats, player stats, and team stats for every game from the 2013-14 season up until the 2022-23 season. This dataset was downloaded from Kaggle.com. [NBA Boxscore Dataset](https://www.kaggle.com/datasets/lukedip/nba-boxscore-dataset) SQLite will be the tool we will use to investigate this dataset. The goal is to answer each question using only 1 query.
 
 ### Questions
 
